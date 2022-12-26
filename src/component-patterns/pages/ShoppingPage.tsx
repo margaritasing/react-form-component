@@ -1,49 +1,14 @@
-import { useState } from "react";
 import {ProductCard, ProductButton, ProductImage, ProductTitle } from "../components";
-import { Product } from "../interfaces/interfaces";
+import { products } from "../data/data";
 import '../styles/custom-styles.css';
-
-const product = {
-  id:'1',
-  title:'Coffee Mug - Card',
-  img:'./coffee-mug.png'
-}
-
-const product2 = {
-    id:'2',
-    title:'Coffee Mug - Meme',
-    img:'./coffee-mug2.png'
-}
-
-const products: Product[] = [product, product2]
-
-interface ProductInCart extends Product {
-    count:number
-}
+import { useShoppingCart } from '../hooks/useShoppingCart';
 
 
-export const Shoppingpage = () =>{
+export const Shoppingpage = () => {
+
+    const { onProductCountChange, shoppingCart } = useShoppingCart()    
     
-    const [shoppingCart, setShoppingCart] = useState<{[key:string]:ProductInCart }>({})
-    
-    const onProductCountChange = ({count,product}: {count:number, product:Product}) => {
 
-        setShoppingCart(oldShoppingCart => {
-
-            if (count === 0) {
-                const {[product.id]:toDelete, ...rest }= oldShoppingCart 
-                
-                return{...rest}                 
-            }
-
-            return {
-                ...oldShoppingCart,                
-                [product.id]: {...product, count }
-            }
-        })
-        /* console.log(count, product) */
-
-    }
     return (
         <div>
             <h1>Shopping Store</h1>
@@ -87,9 +52,7 @@ export const Shoppingpage = () =>{
                 ))
             }        
             </div>        
-        </div>
-
-       
+        </div>       
         /* Se usan diferentes maneras para exportar los componentes */
     )
 }
