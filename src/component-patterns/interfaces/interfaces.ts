@@ -4,7 +4,7 @@ import { Props as ProductImageProps } from "../components/ProductImage";
 import { Props as ProductButtonProps } from "../components/ProductButton";
 
 
-export interface Product {
+export interface Product {   
     id:string;
     title:string;
     img?:string;

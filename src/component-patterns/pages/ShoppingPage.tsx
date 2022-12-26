@@ -53,8 +53,8 @@ export const Shoppingpage = () =>{
                 <ProductCard key={product.id} 
                 product={ product } 
                 className="bg-dark" 
-                onChange={onProductCountChange}
-                              
+                onChange={onProductCountChange}  
+                value={ shoppingCart[product.id]?.count || 0 }                                          
                 >                  
                     <ProductImage className='custom-image'/>
                     <ProductTitle title={"Coffee"} className='text-blanco'/>    
@@ -71,6 +71,7 @@ export const Shoppingpage = () =>{
                 product={ product } 
                 className="bg-dark"
                 style={{ width:'100px' }}
+                onChange={onProductCountChange}
                 value={ product.count }  
                 >                  
                     <ProductImage className='custom-image'/>                        
