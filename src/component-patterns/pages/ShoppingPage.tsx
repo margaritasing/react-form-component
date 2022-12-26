@@ -24,11 +24,25 @@ interface ProductInCart extends Product {
 
 export const Shoppingpage = () =>{
     
-    const [shoppingCart, setShoppingCart] = useState<{[key:string]:ProductInCart }>({       
-    })
+    const [shoppingCart, setShoppingCart] = useState<{[key:string]:ProductInCart }>({})
     
     const onProductCountChange = ({count,product}: {count:number, product:Product}) => {
-        console.log('Productverga', count, product)
+
+        setShoppingCart(oldShoppingCart => {
+
+            if (count === 0) {
+                const {[product.id]:toDelete, ...rest }= oldShoppingCart 
+                
+                return{...rest}                 
+            }
+
+            return {
+                ...oldShoppingCart,                
+                [product.id]: {...product, count }
+            }
+        })
+        /* console.log(count, product) */
+
     }
     return (
         <div>
@@ -39,7 +53,9 @@ export const Shoppingpage = () =>{
                 <ProductCard key={product.id} 
                 product={ product } 
                 className="bg-dark" 
-                onChange={onProductCountChange}>                  
+                onChange={onProductCountChange}
+                              
+                >                  
                     <ProductImage className='custom-image'/>
                     <ProductTitle title={"Coffee"} className='text-blanco'/>    
                     <ProductButton className="custom-buttons"/>       
@@ -47,27 +63,31 @@ export const Shoppingpage = () =>{
                 ))}          
             </div>
 
-            <div className='shopping-cart'>            
-                <ProductCard  
+            <div className='shopping-cart'>    
+            {
+                Object.entries(shoppingCart).map( ([key, product]) => (
+                <ProductCard
+                key={ key }
                 product={ product } 
                 className="bg-dark"
                 style={{ width:'100px' }}
+                value={ product.count }  
                 >                  
                     <ProductImage className='custom-image'/>                        
-                    <ProductButton className="custom-buttons"/>       
-                </ProductCard> 
-                 
-                <ProductCard  
-                product={ product2 } 
-                className="bg-dark"
-                style={{ width:'100px' }}
-                >                  
-                    <ProductImage className='custom-image'/>                        
-                    <ProductButton className="custom-buttons"/>       
-                </ProductCard>    
+                    <ProductButton 
+                    className="custom-buttons"
+                    style={{
+                        display:'flex',
+                        justifyContent:'center'
+                    }}                         
+                    />       
+                </ProductCard>
+                
+                ))
+            }        
             </div>        
-
         </div>
+
        
         /* Se usan diferentes maneras para exportar los componentes */
     )
