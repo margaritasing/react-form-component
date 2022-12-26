@@ -1,4 +1,6 @@
+import { useState } from "react";
 import {ProductCard, ProductButton, ProductImage, ProductTitle } from "../components";
+import { Product } from "../interfaces/interfaces";
 import '../styles/custom-styles.css';
 
 const product = {
@@ -7,48 +9,67 @@ const product = {
   img:'./coffee-mug.png'
 }
 
+const product2 = {
+    id:'2',
+    title:'Coffee Mug - Meme',
+    img:'./coffee-mug2.png'
+}
+
+const products: Product[] = [product, product2]
+
+interface ProductInCart extends Product {
+    count:number
+}
+
+const onProductCountChange = () => {
+    console.log('Productverga')
+}
+
 export const Shoppingpage = () =>{
+
+    const [shoppingCart, setShoppingCart] = useState<{[key:string]:ProductInCart }>({
+        
+    })
+
     return (
         <div>
             <h1>Shopping Store</h1>
             <hr />
             <div style={{display:'flex', flexDirection:'row',flexWrap:'wrap'}}>
-                <ProductCard product={ product } className="bg-dark" >                  
+            { products.map( product => (
+                <ProductCard key={product.id} 
+                product={ product } 
+                className="bg-dark" 
+                onChange={() => onProductCountChange()}>                  
                     <ProductImage className='custom-image'/>
                     <ProductTitle title={"Coffee"} className='text-blanco'/>    
                     <ProductButton className="custom-buttons"/>       
-                </ProductCard> 
-            {/* Esta es la segunda manera de exportar y mostrar componentes 
-            esto es el compont-component-parents*/}
-                <ProductCard product={ product } className="bg-dark" >                  
-                    <ProductCard.Image className='custom-image' style={{
-                        boxShadow:'10px 10px 10px rgba(0,0,0,0.2)'
-                    }}/>
-                    <ProductCard.Title className='text-blanco' />    
-                    <ProductCard.Buttons className="custom-buttons"/>       
-                </ProductCard> 
-
-                <ProductCard 
-                product={ product } 
-                style={{
-                    backgroundColor:'#70d1f8',
-                    textAlign:'center'
-                }} 
-                >                  
-                    <ProductImage style={{
-                        boxShadow:'10px 10px 10px rgba(0,0,0,0.2)'
-                    }}/>
-                    <ProductTitle style={{                        
-                        fontWeight:'bold'                    
-                    }}/>    
-                    <ProductButton style={{
-                        display:'flex',
-                        justifyContent:'end'
-                    }}/>       
-                </ProductCard> 
+                </ProductCard>                                       
+                ))}          
             </div>
-           
+
+            <div className='shopping-cart'>            
+                <ProductCard  
+                product={ product } 
+                className="bg-dark"
+                style={{ width:'100px' }}
+                >                  
+                    <ProductImage className='custom-image'/>                        
+                    <ProductButton className="custom-buttons"/>       
+                </ProductCard> 
+                 
+                <ProductCard  
+                product={ product2 } 
+                className="bg-dark"
+                style={{ width:'100px' }}
+                >                  
+                    <ProductImage className='custom-image'/>                        
+                    <ProductButton className="custom-buttons"/>       
+                </ProductCard>    
+            </div>        
+
         </div>
+       
         /* Se usan diferentes maneras para exportar los componentes */
     )
 }
