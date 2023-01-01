@@ -1,57 +1,29 @@
 import {ProductCard, ProductButton, ProductImage, ProductTitle } from "../components";
 import { products } from "../data/data";
-import { useShoppingCart } from '../hooks/useShoppingCart';
+
 import '../styles/custom-styles.css';
 
+const product = products[0];
 
-export const Shoppingpage = () => {
 
-    const { onProductCountChange, shoppingCart } = useShoppingCart()    
-    
+export const Shoppingpage = () => {   
 
     return (
         <div>
             <h1>Shopping Store</h1>
-            <hr />
-            <div style={{display:'flex', flexDirection:'row',flexWrap:'wrap'}}>
-            { products.map( product => (
+            <hr />                       
                 <ProductCard key={product.id} 
                 product={ product } 
-                className="bg-dark" 
-                onChange={onProductCountChange}  
-                value={ shoppingCart[product.id]?.count || 0 }                                          
-                >                  
-                    <ProductImage className='custom-image'/>
-                    <ProductTitle title={"Coffee"} className='text-blanco'/>    
-                    <ProductButton className="custom-buttons"/>       
-                </ProductCard>                                       
-                ))}          
-            </div>
-
-            <div className='shopping-cart'>    
-            {
-                Object.entries(shoppingCart).map( ([key, product]) => (
-                <ProductCard
-                key={ key }
-                product={ product } 
                 className="bg-dark"
-                style={{ width:'100px' }}
-                onChange={onProductCountChange}
-                value={ product.count }  
+                initialValues={{
+                    count:4,
+                    maxCount:10
+                }}                                                     
                 >                  
-                    <ProductImage className='custom-image'/>                        
-                    <ProductButton 
-                    className="custom-buttons"
-                    style={{
-                        display:'flex',
-                        justifyContent:'center'
-                    }}                         
-                    />       
-                </ProductCard>
-                
-                ))
-            }        
-            </div>        
+                <ProductImage className='custom-image'/>
+                <ProductTitle title={"Coffee"} className='text-blanco'/>    
+                <ProductButton className="custom-buttons"/>       
+                </ProductCard>              
         </div>       
         /* Se usan diferentes maneras para exportar los componentes */
     )
