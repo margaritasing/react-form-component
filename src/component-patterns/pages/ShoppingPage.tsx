@@ -19,10 +19,16 @@ export const Shoppingpage = () => {
                     count:4,
                     maxCount:10
                 }}                                                     
-                >                  
-                <ProductImage className='custom-image'/>
-                <ProductTitle title={"Coffee"} className='text-blanco'/>    
-                <ProductButton className="custom-buttons"/>       
+                >  
+                {
+                    () => (
+                        <>
+                            <ProductImage className='custom-image'/>
+                            <ProductTitle title={"Coffee"} className='text-blanco'/>    
+                            <ProductButton className="custom-buttons"/>                        
+                        </>
+                    )
+                }                
                 </ProductCard>              
         </div>       
         /* Se usan diferentes maneras para exportar los componentes */
