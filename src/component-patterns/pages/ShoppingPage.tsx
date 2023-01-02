@@ -21,7 +21,7 @@ export const Shoppingpage = () => {
                 }}                                                     
                 >  
                 {
-                    () => (
+                    ( args ) => (
                         <>
                             <ProductImage className='custom-image'/>
                             <ProductTitle title={"Coffee"} className='text-blanco'/>    
