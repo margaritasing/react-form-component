@@ -5,7 +5,7 @@ interface useProductArgs {
   product:Product,
   onChange?: (args: onChangeArgs) => void,
   value?:number,
-  initialValues?:InitialValues
+  initialValues?:InitialValues  
 };
 
 export const useProduct = ({onChange, product, value = 0, initialValues }: useProductArgs) => {
@@ -48,7 +48,8 @@ useEffect(() => {
 
   return {
     counter,
-    increaseBy
+    increaseBy,
+    maxCount:initialValues?.maxCount
   };
 
 }
