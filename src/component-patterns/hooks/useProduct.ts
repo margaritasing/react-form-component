@@ -1,41 +1,54 @@
 import { useEffect, useRef, useState } from 'react'
-import { onChangeArgs, Product } from '../interfaces/interfaces';
+import { onChangeArgs, Product, InitialValues } from '../interfaces/interfaces';
 
 interface useProductArgs {
   product:Product,
   onChange?: (args: onChangeArgs) => void,
-  value?:number
-}
+  value?:number,
+  initialValues?:InitialValues
+};
 
-export const useProduct = ({onChange, product, value = 0 }: useProductArgs) => {
+export const useProduct = ({onChange, product, value = 0, initialValues }: useProductArgs) => {
 
-const [counter, setCounter] = useState(value);
+const [counter, setCounter] = useState(initialValues?.count || value);
 
-const isController = useRef( !!onChange )
+const isMounted = useRef(false);
 
-const increaseBy = (value: number) => {
+const isController = useRef( !!onChange );
+
+console.log(initialValues)
+
+const increaseBy = (value: number ) => { 
 
   if (isController.current) {
     return onChange!({
       count: value, product
     })    
-  }
-  
-  const newValue = Math.max(counter + value , 0)
+  };
 
-  setCounter(newValue)
+  let newValue = Math.max(counter + value , 0);
+  if (initialValues?.maxCount) { //pregunta si el maxCount existe
+    newValue = Math.min(newValue, initialValues.maxCount)   //si tiene voy a tomar el minimo de esos dos , y esa es la referencia, y luego ese es el valor que toma el setCounter
+  };
 
-  onChange && onChange({ count: newValue, product })
+  setCounter(newValue);
+
+  onChange && onChange({ count: newValue, product });
 }
 
 useEffect(() => {
+  if (!isMounted.current) return
   setCounter(value)  
-}, [value])
+}, [value]);
+
+useEffect(() => {
+  isMounted.current = true;   
+}, []);
 
 
-return {
-      counter,
-      increaseBy
-}
+  return {
+    counter,
+    increaseBy
+  };
 
 }
