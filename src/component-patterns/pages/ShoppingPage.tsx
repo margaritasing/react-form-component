@@ -21,11 +21,23 @@ export const Shoppingpage = () => {
                 }}                                                     
                 >  
                 {
-                    ( args ) => (
+                    ( {reset, count, increaseBy, isMaxCountReached, maxCount} ) => (
                         <>
                             <ProductImage className='custom-image'/>
                             <ProductTitle title={"Coffee"} className='text-blanco'/>    
-                            <ProductButton className="custom-buttons"/>                        
+                            <ProductButton className="custom-buttons"/>  
+
+                            <button onClick={ reset }>Reset</button> 
+                            <button onClick={() => increaseBy(-2)}>-2</button> 
+
+                            {
+                                !isMaxCountReached ? <button onClick={() => increaseBy(+2)}>+2</button> : '' 
+                            }
+
+                            {
+                                (!isMaxCountReached && <button onClick={() => increaseBy(+2)}>+2</button>)
+                            }
+                            <span className="espacio">{count}-{maxCount}</span>                    
                         </>
                     )
                 }                
